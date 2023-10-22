@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title> My Hemming Code </title>
+        <script> 
+        function code(){
+            let inpText = document.getElementById('inpMessage').value;
+            inpText = inpText.split(''); //массив
+            for(let i = 0; i < inpText.length; i++){ //"inpText"-> в целые числа с помощью parseInt()
+                inpText[i] = parseInt(inpText[i]);
+            }
+            let cb1 = (inpText[0] + inpText[2] + inpText[3]) % 2; //controlBit
+            let cb2 = (inpText[0] + inpText[1] + inpText[3]) % 2;
+            let cb3 = (inpText[1] + inpText[2] + inpText[3]) % 2;
+            document.getElementById('outputMessage').value = inpText.join('') + cb1 + cb2 + cb3;
+        }
+
+
+        function hemmingCode() {
+            let encodedMessage = document.getElementById('outputMessage').value;
+            let encodedArray = encodedMessage.split('');
+            for (let i = 0; i < encodedArray.length; i++) {
+                encodedArray[i] = parseInt(encodedArray[i]);
+            }
+            
+            let correctedMessage = '';
+            
+            for (let i = 0; i < encodedArray.length; i++) {
+                encodedArray[i] = (encodedArray[i] + 1) % 2;
+                
+                if ((encodedArray[0] + encodedArray[2] + encodedArray[3]) % 2 == encodedArray[4] && 
+                (encodedArray[0] + encodedArray[1] + encodedArray[3]) % 2 == encodedArray[5] &&
+                (encodedArray[1] + encodedArray[2] + encodedArray[3]) % 2 == encodedArray[6]) {
+                correctedMessage = encodedArray.slice(0, 7).join('');
+                document.getElementById('correctedMessage').value = correctedMessage;
+                break;
+                }
+                else {
+                    encodedArray[i] = (encodedArray[i] + 1) % 2;
+                }
+            }
+        }
+        </script>
+    </head>
+    <body> 
+        <h1> Ksel, Hemming Code </h1>
+        <p><input type = 'text' id ='inpMessage' /> input message, 4 bits </p>
+        <p><input type = "button" value="Code" onclick = 'code()' /></p> 
+
+        <p><input type = 'text' id ='outputMessage' />  coded message, 4 bits </p>
+        <p><input type = "button" value="Check" onclick = 'hemmingCode()'  /></p>
+
+        <p><input type='text' id='correctedMessage' /> corrected message, 4 бита </p>
+
+    </body>
+</html>
